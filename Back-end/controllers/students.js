@@ -1,15 +1,18 @@
 const bcrypt = require('bcryptjs');  // for password encryption
-const { getValidateStudent } = require('../validation/getValidators');
+
 const Student = require('../models/student');
 const Teacher = require('../models/teacher');
 const Course = require('../models/course');
+const { getValidateStudent } = require('../validation/getValidators');
+const { sendPasswordEmail } = require ('../emailing/emailUtils');
+const { generatePassword } = require ('../validation/passwordGenerators');
 
 
 // POST Student
 exports.createStudent = async (req, res, next) => {
-  const {id, email, password, name, lastname, grade } = req.body;
+  const {id, email, name, lastname, grade } = req.body;
   
-  if (!id || !email || !password || !name || !lastname || !grade) {
+  if (!id || !email || !name || !lastname || !grade) {
     console.log('\nStudent data field is missing')
     return res.status(500).json({ message: "Falta un campo del estudiante" });
   }
@@ -34,14 +37,21 @@ exports.createStudent = async (req, res, next) => {
       return res.status(500).json({ message: "Grado inválido" })
     }
 
+    const password = generatePassword();  // server generated password
     const encryptedPassword = await bcrypt.hash(password, 10);  // salt lenght 10 is secure and fast enough
+    const passwordEmailResponse = await sendPasswordEmail(email, password);
+    if (!passwordEmailResponse) {
+      console.log(`Failed to send email with password (${email})!`);
+      return res.status(500).json({ message: "Un error ocurrió enviando el correo con la contraseña" })
+    }
+    
     const student = new Student({ id, email, password: encryptedPassword, name, lastname, grade });
-
     await student.save();  // call to create student
+
     console.log(`Student created successfully (${name} ${lastname})!`);
     return res.status(201).json({ message: 'Se creó el estudiante exitosamente' });
-
-  } catch (error) {
+  }
+   catch (error) {
     console.log(error);
     console.log(`Failed student creation (${name} ${lastname})!`);
     return res.status(500).json({ message: "Un error ocurrió creando el estudiante" })
@@ -88,7 +98,7 @@ exports.getStudents =  async (req, res, next) => {
 // UPDATE Student
 exports.udpateStudent =  async (req, res, next) => {
   const id = req.params.id;
-  const { email, password, name, lastname, grade } = req.body;
+  const { email, name, lastname, grade } = req.body;
   console.log(`\nUpdating student (${id}, ${name} ${lastname})...`);
 
   if (!id || !email || !name || !lastname || !grade) {
@@ -117,11 +127,6 @@ exports.udpateStudent =  async (req, res, next) => {
       console.log(`Enrolled student can't change grade!`);
       return res.status(500).json({ message: "Estudiante no puede cambiar de grado porque está inscrito en cursos" })
     };
-    
-    if (password && password != "") {  // password is optional
-      const encryptedPassword = await bcrypt.hash(password, 10); 
-      student.password = encryptedPassword;
-    }
 
     student.email = email;
     student.name = name;

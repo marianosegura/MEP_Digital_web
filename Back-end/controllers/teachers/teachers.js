@@ -2,13 +2,15 @@ const bcrypt = require('bcryptjs');  // for password encryption
 const Teacher = require('../../models/teacher');
 const Course = require('../../models/course');
 const { getValidateTeacher } = require('../../validation/getValidators');
+const { sendPasswordEmail } = require ('../../emailing/emailUtils');
+const { generatePassword } = require ('../../validation/passwordGenerators');
 
 
 // POST Teacher
 exports.createTeacher =  async (req, res, next) => {
-  const {id, email, password, name, lastname } = req.body;
+  const {id, email, name, lastname } = req.body;
   
-  if (!id || !email || !password || !name || !lastname) {
+  if (!id || !email || !name || !lastname) {
     console.log('\nTeacher data field is missing')
     return res.status(500).json({ message: "Falta un campo del profesor" });
   }
@@ -27,10 +29,17 @@ exports.createTeacher =  async (req, res, next) => {
       return res.status(500).json({ message: "Correo ya está registrado" })
     }
 
+    const password = generatePassword();  // server generated password
     const encryptedPassword = await bcrypt.hash(password, 10);  // salt lenght 10 is secure and fast enough
-    const teacher = new Teacher({ id, email, password: encryptedPassword, name, lastname });
+    const passwordEmailResponse = await sendPasswordEmail(email, password);
+    if (!passwordEmailResponse) {
+      console.log(`Failed to send email with password (${email})!`);
+      return res.status(500).json({ message: "Un error ocurrió enviando el correo con la contraseña" })
+    }
 
+    const teacher = new Teacher({ id, email, password: encryptedPassword, name, lastname });
     await teacher.save();  // call to create teacher
+    
     console.log(`Teacher created successfully (${name} ${lastname})!`);
     return res.status(201).json({ message: 'Se creó el profesor exitosamente' });
 
@@ -81,7 +90,7 @@ exports.getTeacher = async (req, res, next) => {
 // UPDATE Teacher
 exports.updateTeacher =  async (req, res, next) => {
   const id = req.params.id;
-  const { email, password, name, lastname } = req.body;
+  const { email, name, lastname } = req.body;
   console.log(`\nUpdating teacher (${id}, ${name} ${lastname})...`);
 
   if (!id || !email || !name || !lastname) {
@@ -98,11 +107,6 @@ exports.updateTeacher =  async (req, res, next) => {
     
     const teacher = await getValidateTeacher(id, res);
     if (!teacher) return;
-    
-    if (password && password != "") {  // password is optional
-      const encryptedPassword = await bcrypt.hash(password, 10); 
-      teacher.password = encryptedPassword;
-    }
 
     teacher.email = email;
     teacher.name = name;

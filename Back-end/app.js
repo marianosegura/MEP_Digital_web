@@ -8,6 +8,7 @@ const studentsRoutes = require('./routes/students');
 const authRoutes = require('./routes/auth');
 const coursesRoutes = require('./routes/courses');
 
+
 // Express configuration
 const app = express();
 
@@ -31,7 +32,7 @@ app.use((req, res, next) => {  // solving CORS security problem for every path
 });
 
 // MongoDB configuration
-mongoose.connect(`mongodb+srv://mep-digital-backend:${ process.env.MONGO_ATLAS_PWD }@cluster0.73m17.mongodb.net/mep-digital?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(`mongodb+srv://mep-digital-backend:${ process.env.MONGO_ATLAS_PWD }@cluster0.73m17.mongodb.net/mep-digital-web?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
     console.log("Successfully connected to MongoDB Atlas!");
   })
@@ -47,7 +48,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", coursesRoutes);
 
 app.use('/', (req, res, next) => {
-    res.status(200).json({ message: "Hi from MEP Digital!" });
+  res.status(200).json({ message: "Hi from MEP Digital Web!" });
 });
 
 module.exports = app;

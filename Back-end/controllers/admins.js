@@ -1,12 +1,16 @@
 const bcrypt = require('bcryptjs');  // for password encryption
+
 const Admin = require('../models/admin');
+const { sendPasswordEmail } = require ('../emailing/emailUtils');
+const { generatePassword } = require ('../validation/passwordGenerators');
+
 
 
 // POST Admin
 exports.createAdmin = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
   
-  if (!email || !password ) {
+  if (!email ) {
     console.log('\nAdmin data field is missing')
     return res.status(500).json({ message: "Falta un campo del admin" });
   }
@@ -20,10 +24,17 @@ exports.createAdmin = async (req, res, next) => {
       return res.status(500).json({ message: "Correo ya está registrado" })
     }
 
+    const password = generatePassword();  // server generated password
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const admin = new Admin({ email, password: encryptedPassword });
+    const passwordEmailResponse = await sendPasswordEmail(email, password);
+    if (!passwordEmailResponse) {
+      console.log(`Failed to send email with password (${email})!`);
+      return res.status(500).json({ message: "Un error ocurrió enviando el correo con la contraseña" })
+    }
 
+    const admin = new Admin({ email, password: encryptedPassword });
     await admin.save();  // call to create admin
+    
     console.log(`Admin created successfully (${email})!`);
     return res.status(201).json({ message: 'Se creó el admin exitosamente' });
 
