@@ -1,6 +1,7 @@
 const Course = require('../../models/course');
 const { scheduleOverlapsCourses } = require('../../validation/scheduleCheckers');
 const { getValidateStudent, getValidateCourse } = require('../../validation/getValidators');
+const { sendStudentsListEmail } = require('../../emailing/emailUtils');
 
 
 // POST Course Student
@@ -98,4 +99,36 @@ exports.deleteCourseStudent = async (req, res, next) => {
     console.log(`Error disenrolling student!`);
     return res.status(500).json({ message: "Un error ocurrió dando de baja al estudiante" })
   }
+};
+
+
+// POST Email List of Course Students
+exports.emailCourseStudentsList = async (req, res, next) => {
+  const courseId = req.params.courseId;
+  const email = req.body.email;
+  
+  if (!email) {
+    console.log('\nEmail is missing')
+    return res.status(500).json({ message: "Falta el correo electrónico" });
+  }
+
+  console.log(`\nSending email with course students (${courseId})...`);
+  let course = null;
+  try {
+    course = await getValidateCourse(courseId, res, populateAll=true);
+    if (!course) return;
+  } catch (error) {
+    console.log(error);
+    console.log(`Error sending students list!`);
+    return res.status(500).json({ message: "Un error ocurrió enviando la lista de estudiantes" })
+  }
+
+  sendStudentsListEmail(email, course, (error) => {
+    if (error) {
+      console.log(`Couldn't send students email list!`);
+      return res.status(500).json({ message: "No se pudo enviar el correo con los estudiantes del curso" })
+    }
+    console.log(`Student list sent successfully!`);
+    return res.status(201).json({ message: 'Se envió exitosamente la lista de estudiantes' });
+  });
 };

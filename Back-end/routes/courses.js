@@ -45,6 +45,8 @@ router.put("/:courseId/news/:newsId", CoursesNewsController.updateCourseNews);
 // DELETE Course News
 router.delete("/:courseId/news/:newsId", CoursesNewsController.deleteCourseNews);
 
+// POST Email List of Course Students
+router.post("/:courseId/students/email-list", CoursesStudentsController.emailCourseStudentsList);
 
 // DELETE Course Student
 router.delete("/:courseId/students/:studentId", CoursesStudentsController.deleteCourseStudent);
