@@ -1,0 +1,23 @@
+form.Center{
+  align-items: center;
+  align-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+div.list{
+  display:flex;
+  flex-direction: column;
+  width: 15%;
+  background-color:rgb(235, 244, 255);
+  height: 100%;
+}
+div.courses{
+  display: flex;
+  flex-direction: row;
+}
+div.detailCourse{
+  width: 85%;
+  background-color: rgb(211, 223, 255);
+}
