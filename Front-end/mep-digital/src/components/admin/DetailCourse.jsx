@@ -1,14 +1,23 @@
 import React from 'react'
 import { useSelector } from "react-redux";
+import CourseBasiInfo from './CourseBasiInfo';
 
-export default function DetailCourse() {
+export default function DetailCourse(props) {
     const selectCourse = useSelector(state => state.coursesInfo.selectCourse)
+    const newFlag = useSelector(state => state.coursesInfo.newFlag)
     return (
         <div className = "detailCourse">
         {selectCourse.name !== undefined
         ?
             (
-                <h1>Nombre:{selectCourse.name}</h1>
+                <CourseBasiInfo
+                name = {selectCourse.name}
+                id = {selectCourse.id}
+                grade = {selectCourse.grade}
+                new = {newFlag}
+                getCourses = {props.getCourses}
+                />
+
             )
         :
             (

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DetailCourse from "../../components/admin/DetailCourse";
 import List from "../../components/List";
-import { updateCoursesAction, selectCourseAction } from "../../redux/courseReducer";
+import { updateCoursesAction, selectCourseAction, selectNewCourseAction } from "../../redux/courseReducer";
 
 export default function Courses() {
   const courses = useSelector((state) => state.coursesInfo.courses);
@@ -39,14 +39,23 @@ export default function Courses() {
     dispatch(selectCourseAction(idCourse))
   }
 
+  function selectNewCourse(){
+    dispatch(selectNewCourseAction())
+  }
+
   useEffect(() => {
     checkCourses();
     // eslint-disable-next-line
   },[]);
   return (
     <div className = "courses">
-        <List list = {courses} type = "Curso" onChange = {selectCourse}/>
-        <DetailCourse/>
+        <List 
+        list = {courses} 
+        type = "Curso" 
+        onChange = {selectCourse}
+        onChangeNew = {selectNewCourse}
+        />
+        <DetailCourse getCourses = {getCourses}/>
     </div>
   );
 }
