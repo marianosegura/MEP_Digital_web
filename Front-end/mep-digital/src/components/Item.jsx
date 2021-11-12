@@ -8,8 +8,8 @@ export default function Item(props) {
         console.log("I have to change all for " + props.id)
     }
     return (
-        <Button variant="text" onClick={handleClick} className="itemButton">
+        <Button variant="text" onClick={handleClick}>
         <p>{props.name} | {props.id}</p>
-      </Button>
+        </Button>
     )
 }

@@ -43,7 +43,6 @@ export default function CourseBasiInfo(props) {
         data = {...data,id:id}
         myInit.body = JSON.stringify(data)
     }
-    console.log(data)
     var myRequest = new Request(
         direction,
         myInit
