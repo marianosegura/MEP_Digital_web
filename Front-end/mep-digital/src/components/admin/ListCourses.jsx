@@ -15,6 +15,10 @@ export default function ListCourses(props) {
       params = new URLSearchParams({
         "teacherId":props.id
       })
+    } else { //if students
+      params = new URLSearchParams({
+        "studentId":props.id
+      })
     }
     var myRequest = new Request(
       "https://desolate-everglades-59280.herokuapp.com/api/courses?" + params,
@@ -37,7 +41,7 @@ export default function ListCourses(props) {
       });
   };
   useEffect(() => {
-    getCourses();
+    getCourses();//need if 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

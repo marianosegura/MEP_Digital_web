@@ -8,7 +8,7 @@ export default function Qualification() {
   const [ratings] = useState(selectTeacher.ratings)
 
   const getRating = () => {
-    if(ratings.length > 0){
+    if(ratings !== undefined &&ratings.length > 0){
       let sumRating = 0
       ratings.forEach(rating => {
         sumRating += rating.rating
