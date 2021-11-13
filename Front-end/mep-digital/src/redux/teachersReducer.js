@@ -34,7 +34,8 @@ const initialState = {
             name:"",
             id:"",
             lastname:"",
-            ratings:[]
+            ratings:[],
+            email:""
           }
         }
       default:

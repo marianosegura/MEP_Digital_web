@@ -59,6 +59,30 @@ export default function CourseBasiInfo(props) {
         props.getCourses()
     });
   }
+  function deleteCourse(e){
+    e.preventDefault();
+    var direction = "https://desolate-everglades-59280.herokuapp.com/api/courses/" + id 
+    var myInit = {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+    };
+    var myRequest = new Request(
+        direction,
+        myInit
+    );
+    fetch(myRequest)
+    .then((response) => {
+        if (!response.ok) {
+            throw response;
+        }
+        return response.json(); //we only get here if there is no error
+    })
+    .then((json) => {
+        alert(json.message)
+        props.getCourses()
+    });
+  }
+  
   useEffect(() => {
     setName(props.new ? "" : props.name);
     setId(props.new ? "" : props.id);
@@ -122,6 +146,15 @@ export default function CourseBasiInfo(props) {
           type="submit"
           fullWidth={true}>
             Guardar
+          </Button>
+          <br />
+          <br />
+          <Button 
+          variant="contained" 
+          onClick={deleteCourse}
+          fullWidth={true}
+          disabled={props.new}>
+            Eliminar
           </Button>
         </Box>
       </form>
