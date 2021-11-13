@@ -11,13 +11,14 @@ export const courseReducer = (state = initialState, action) => {
     case "GET_COURSES":
       return state;
     case "UPDATE_COURSES":
+      let newSelectCourse = action.data.courses.find(course => course.id === state.selectCourse.id) //updte selected 
       return {
         ...state,
         newFlag:false,
         courses: action.data.courses,
+        selectCourse: newSelectCourse
       };
     case "SELECT_COURSE":
-      console.log(state.courses.find(course => course.id === action.data.idCourse))
       return{
         ...state,
         newFlag:false,

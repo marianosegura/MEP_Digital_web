@@ -45,9 +45,20 @@ div.schedule{
   padding-top: 10px;
   padding-bottom: 20px;
   padding-left: 30px;
-  padding-right: 30px; /* 10px with form*/
+  padding-right: 30px; 
   margin: 10px;
   height: fit-content;
+}
+div.selectTeacher{
+  background-color: rgb(211, 223, 255);
+  border-radius: 5px;
+  height: fit-content;
+  width: 270px;
+  margin: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px; 
 }
 
 div.scheduleItem{

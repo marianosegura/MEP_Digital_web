@@ -43,15 +43,18 @@ export default function Schedule(props) {
     );
     fetch(myRequest)
     .then((response) => {
-        if (!response.ok) {
-            throw response;
+        if (response.ok) {
+          return response.json();
         }
-        return response.json(); //we only get here if there is no error
+        return response.text().then(text => {throw new Error(text)})
     })
     .then((json) => {
         alert(json.message)
         props.getCourses()
-    });
+    })
+    .catch((error) => {
+      alert(JSON.parse(error.message).message)
+    })
 
   };
   useEffect(() => {
@@ -60,7 +63,7 @@ export default function Schedule(props) {
   return (
     <div className="schedule">
       <p>Horarios</p>
-      {listSchedule.length > 0 ? (
+      {listSchedule !== undefined && listSchedule.length > 0 ? (
         listSchedule.map((element) => {
           return (
             <ScheduleItem
@@ -94,13 +97,13 @@ export default function Schedule(props) {
             <MenuItem value={"default"} disabled>
               Selecciona
             </MenuItem>
-            <MenuItem value={0}>Lunes</MenuItem>
-            <MenuItem value={1}>Martes</MenuItem>
-            <MenuItem value={2}>Miércoles</MenuItem>
-            <MenuItem value={3}>Jueves</MenuItem>
-            <MenuItem value={4}>Viernes</MenuItem>
-            <MenuItem value={5}>Sabado</MenuItem>
-            <MenuItem value={6}>Domingo</MenuItem>
+            <MenuItem value={1}>Lunes</MenuItem>
+            <MenuItem value={2}>Martes</MenuItem>
+            <MenuItem value={3}>Miércoles</MenuItem>
+            <MenuItem value={4}>Jueves</MenuItem>
+            <MenuItem value={5}>Viernes</MenuItem>
+            <MenuItem value={6}>Sabado</MenuItem>
+            <MenuItem value={7}>Domingo</MenuItem>
           </Select>
         </FormControl>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
