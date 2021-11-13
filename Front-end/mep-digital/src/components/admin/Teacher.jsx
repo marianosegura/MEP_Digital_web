@@ -113,6 +113,7 @@ export default function Teacher(props) {
           onChange={onChangeId}
           value={teacherId}
           fullWidth={true}
+          type="number"
         />
         <br />
         <br />

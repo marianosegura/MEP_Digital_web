@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CourseBasiInfo from "./CourseBasiInfo";
+import ListStudents from "./ListStudents";
 import Schedule from "./Schedule";
 import Teacher from "./Teacher";
 
@@ -31,6 +32,12 @@ export default function DetailCourse(props) {
           teacherId={selectCourse.teacher !== undefined ? selectCourse.teacher.id : ""}
           teacherName={selectCourse.teacher !== undefined ? selectCourse.teacher.name : ""}
           teacherLastName={selectCourse.teacher !== undefined ? selectCourse.teacher.lastname : ""}
+          />
+          <ListStudents
+          new={newFlag}
+          courseId={selectCourse.id}
+          getCourses={props.getCourses}
+          students={selectCourse.students}
           />
         </div>
       ) : (
