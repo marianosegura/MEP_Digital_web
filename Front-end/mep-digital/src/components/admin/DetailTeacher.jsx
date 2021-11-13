@@ -10,8 +10,8 @@ export default function DetailTeacher(props) {
       {selectTeacher !== undefined ? (
         <div className="detailCourse">
           <TeacherBasiInfo getTeachers={props.getTeachers} />
-          <ListCourses type="teachers" />
-          <Qualification />
+          <ListCourses type="teachers" id={selectTeacher.id}/>
+          <Qualification/>
         </div>
       ) : (
         <p>Selecciona un profesor o crea uno !</p>

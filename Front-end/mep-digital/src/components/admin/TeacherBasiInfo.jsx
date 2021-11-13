@@ -10,18 +10,10 @@ export default function TeacherBasiInfo(props) {
     (state) => state.teachersInfo.selectTeacher
   );
   const newFlag = useSelector((state) => state.teachersInfo.newFlag);
-  const [id, setId] = useState(
-    selectTeacher !== undefined ? selectTeacher.id : ""
-  );
-  const [name, setName] = useState(
-    selectTeacher !== undefined ? selectTeacher.name : ""
-  );
-  const [lastname, setLastname] = useState(
-    selectTeacher !== undefined ? selectTeacher.lastname : ""
-  );
-  const [email, setEmail] = useState(
-    useState(selectTeacher !== undefined ? selectTeacher.email : "")
-  );
+  const [id, setId] = useState(selectTeacher.id);
+  const [name, setName] = useState(selectTeacher.name);
+  const [lastname, setLastname] = useState(selectTeacher.lastname);
+  const [email, setEmail] = useState(selectTeacher.email);
   //Button functions
   const deleteTeacher = (e) => {
     e.preventDefault();
