@@ -15,6 +15,8 @@ export const userReducer = (state = initialState, action) => {
                 email: action.data.email,
                 type: action.data.type
             }
+        case "LOGOUT_USER":
+            return initialState
         default:
             console.log("No registred action")
             console.log(action)
@@ -31,4 +33,7 @@ export function createAction(data,type){
 export function userInfoAction(userId,email,type){
     let data = {userId, email, type}
     return createAction(data,"SET_USER_INFO")
+}
+export function logOutAction(){
+    return createAction({},"LOGOUT_USER")
 }
