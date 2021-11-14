@@ -45,6 +45,7 @@ export default function Teachers() {
         type="Profesor"
         onChange={selectTeacher}
         onChangeNew={selectNewTeacher}
+        admin={true}
       />
       <DetailTeacher getTeachers={getTeachers}/>
     </div>

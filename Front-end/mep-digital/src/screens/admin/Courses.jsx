@@ -54,6 +54,7 @@ export default function Courses() {
         type = "Curso" 
         onChange = {selectCourse}
         onChangeNew = {selectNewCourse}
+        admin={true}
         />
         <DetailCourse getCourses = {getCourses}/>
     </div>

@@ -51,6 +51,7 @@ export default function Students() {
         type="Estudiante"
         onChange={selectStudent}
         onChangeNew={selectNewStudent}
+        admin={true}
       />
       <DetailStudent getStudents={getStudents} />
     </div>

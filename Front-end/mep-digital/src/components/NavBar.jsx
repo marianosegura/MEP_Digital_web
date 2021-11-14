@@ -53,6 +53,22 @@ export default function NavBar() {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleCourses = () => {
+    switch(userType) {
+      case "admin":
+        navigate('/courses')
+        break
+      case "teacher":
+        navigate('/teacher')
+        break
+      case "student":
+        navigate('/student')
+        break
+      default:
+        navigate("/")
+    }
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -64,12 +80,13 @@ export default function NavBar() {
             <div>
               <Button color="inherit" onClick={()=>{navigate("/teachers")}}>Profesores</Button>
               <Button color="inherit" onClick={()=>{navigate("/students")}}>Estudiantes</Button>
-              <Button color="inherit" onClick={()=>{navigate("/courses")}}>Cursos</Button>
+              
             </div>
           }
-          {userType === "teacher" &&
+          
+          {userType !== "notLoggedIn" &&
           <div>
-          <Button color="inherit" onClick={()=>{navigate("/teacher")}}>Cursos</Button>
+          <Button color="inherit" onClick={handleCourses}>Cursos</Button>
           <IconButton
               size="large"
               edge="end"
