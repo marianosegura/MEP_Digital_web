@@ -97,7 +97,7 @@ export default function ListStudents(props) {
   return (
     <div className="selectTeacher">
       <p>
-        List de estudiantes (
+        Lista de estudiantes (
         {props.students !== undefined ? props.students.length : 0})
       </p>
       <Box sx={{ maxWidth: 300 }}>

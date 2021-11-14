@@ -82,7 +82,7 @@ export default function Assignments(props) {
       <br />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
-        label="Basic example"
+        label="Fecha de entrega"
         value={date}
         onChange={(newValue) => {
           setDate(newValue);

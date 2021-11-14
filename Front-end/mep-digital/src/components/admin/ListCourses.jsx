@@ -41,9 +41,11 @@ export default function ListCourses(props) {
       });
   };
   useEffect(() => {
-    getCourses();//need if 
+    if(props.id !== undefined){
+      getCourses();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props]);
   return (
     <div>
       {!newFlag && (

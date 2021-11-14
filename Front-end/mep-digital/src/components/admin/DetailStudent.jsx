@@ -13,7 +13,7 @@ export default function DetailStudent(props) {
           <ListCourses type="students" id={selectStudent.id}/>
         </div>
       ) : (
-        <p>Selecciona un profesor o crea uno !</p>
+        <p>Selecciona un estudiante o crea uno !</p>
       )}
     </div>
   )

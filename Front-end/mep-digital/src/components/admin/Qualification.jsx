@@ -1,4 +1,4 @@
-import React from 'react'
+import React  from 'react'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import Rating from './Rating'
@@ -6,8 +6,8 @@ export default function Qualification() {
   const newFlag = useSelector(state => state.teachersInfo.newFlag)
   const selectTeacher = useSelector(state => state.teachersInfo.selectTeacher)
   const [ratings] = useState(selectTeacher.ratings)
-
   const getRating = () => {
+    
     if(ratings !== undefined &&ratings.length > 0){
       let sumRating = 0
       ratings.forEach(rating => {
@@ -32,7 +32,8 @@ export default function Qualification() {
                 <Rating
                 name={rate.student.name}
                 lastname={rate.student.lastname}
-                rating={rate.raating}
+                rating={rate.rating}
+                key={rate._id}
                 />
               );
             })
