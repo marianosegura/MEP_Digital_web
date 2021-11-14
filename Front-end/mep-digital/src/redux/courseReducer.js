@@ -43,6 +43,8 @@ export const courseReducer = (state = initialState, action) => {
           teacher:{}
         }
       }
+    case "CLEAR_COURSE_INFO": 
+      return initialState
     default:
       console.log("No registred action");
       console.log(action);
@@ -65,6 +67,9 @@ export function selectCourseAction(idCourse){
 }
 export function selectNewCourseAction(idCourse){
   return createAction({},"SELECT_NEW_COURSE")
+}
+export function clearCoursesAction(){
+  return createAction({},"CLEAR_COURSE_INFO")
 }
 
 

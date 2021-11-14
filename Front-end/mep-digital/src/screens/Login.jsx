@@ -11,8 +11,7 @@ import {useNavigate} from 'react-router-dom';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userInfoAction } from "../redux/userReducer";
-import { updateCoursesAction } from "../redux/courseReducer";
-
+import { clearCoursesAction } from '../redux/courseReducer';
 
 export default function Login() {
   const [type, setType] = useState("default")
@@ -75,31 +74,9 @@ export default function Login() {
       .then((json) => {
         let id = type ==="admin"?"admin":json.id
         dispatch(userInfoAction(id,userName,type))
-        getCourses()
         router();
       });
   }
-  const getCourses = () => {
-    var myInit = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-    var myRequest = new Request(
-      "https://desolate-everglades-59280.herokuapp.com/api/courses",
-      myInit
-    );
-    fetch(myRequest)
-      .then((response) => {
-        if (!response.ok) {
-          throw response;
-        }
-        return response.json();
-      })
-      .then((json) => {
-        dispatch(updateCoursesAction(json.courses));
-      });
-  };
-
   
   const checkInputData = () => {
     if (
@@ -114,6 +91,7 @@ export default function Login() {
 
   const onSummit = (e) => {
     e.preventDefault();
+    dispatch(clearCoursesAction())
     if (checkInputData()) {
       console.log(
         userName + ":" + password + ":" + type

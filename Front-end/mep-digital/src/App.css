@@ -70,3 +70,13 @@ div.scheduleItem{
   text-align: center;
   margin-top: 5px;
 }
+div.student{
+  text-align: left;
+  border-bottom: 2px solid rgb(144, 174, 255);
+  color:rgb(1, 12, 43);
+}
+div.teacher{
+  text-align: right;
+  border-bottom: 2px solid rgb(144, 174, 255);
+  color:rgb(2, 1, 37);
+}
