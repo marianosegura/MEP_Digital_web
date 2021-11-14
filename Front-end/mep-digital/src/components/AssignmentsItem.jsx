@@ -32,7 +32,7 @@ export default function AssignmentsItem(props) {
   return (
     <div className="scheduleItem">
       <p>{props.title}</p>
-      <p>Fecha {props.date !== undefined ? props.date.split("T")[0] : ""}</p>
+      <p>Para {props.date !== undefined ? props.date.split("T")[0] : ""}</p>
       <p>{props.message}</p>
 
       {type === "teacher" && (
