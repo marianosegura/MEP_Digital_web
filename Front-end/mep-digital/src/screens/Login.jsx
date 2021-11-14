@@ -66,16 +66,19 @@ export default function Login() {
     );
     fetch(myRequest)
       .then((response) => {
-        if (!response.ok) {
-          throw response;
+        if (response.ok) {
+          return response.json(); 
         }
-        return response.json(); //we only get here if there is no error
+        return response.text().then(text => {throw new Error(text)})
       })
       .then((json) => {
         let id = type ==="admin"?"admin":json.id
         dispatch(userInfoAction(id,userName,type))
         router();
-      });
+      })
+      .catch((error) => {
+        alert(JSON.parse(error.message).message)
+      })
   }
   
   const checkInputData = () => {
