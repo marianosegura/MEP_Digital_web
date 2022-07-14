@@ -1,5 +1,20 @@
-# MEP_Digital_web
-Website to manage elementary school courses
+# MEP Digital
+Website to manage elementary school courses built with Node.js backend and React frontend. With email features to get list of students as pdf and receive registration password.  
+
+## Roles 
+### Admin
+* create/read/update/delete courses/teachers/students
+* assign teachers/students to courses
+
+### Teacher
+* create/read/update/delete course news/assignments
+* create/read course chat messages
+* request an email with the list of course students as pdf
+
+### Student
+* read course news/assignments
+* create/read course chat messages
+* review course teacher
 
 ## MongoDB Collections Schemas 
 ### Admin  
