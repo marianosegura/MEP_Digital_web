@@ -1,14 +1,15 @@
 # MEP_Digital_web
 Website to manage elementary school courses
 
-MongoDB collections schemas: 
-
-Admin {  
+## MongoDB Collections Schemas 
+### Admin  
+{  
 &ensp;email: string,  
 &ensp;password: string  
 }  
 
-Student {  
+### Student 
+{  
 &ensp;id: string,  
 &ensp;email: string,  
 &ensp;password: string,  
@@ -17,13 +18,14 @@ Student {
 &ensp;grade: number  
 }
 
-Teacher {  
+### Teacher 
+{  
 &ensp;id: string,  
 &ensp;email: string,  
 &ensp;password: string,  
 &ensp;name: string,  
 &ensp;lastname: string,  
-&ensp;ratings: [  
+&ensp;**ratings**: [  
 &emsp;{  
 &emsp;&ensp;student: ObjectId   
 &emsp;&ensp;rating: number  
@@ -31,20 +33,21 @@ Teacher {
 &ensp;]  
 }  
 
-Course {  
+### Course 
+{  
 &ensp;id: string,  
 &ensp;name: string,  
 &ensp;grade: number,  
 &ensp;teacher: ObjectId,  
 &ensp;students: [ObjectId],  
-&ensp;news: [  
+&ensp;**news**: [  
 &emsp;{  
 &emsp;&ensp;title: string,  
 &emsp;&ensp;message: string,  
 &emsp;&ensp;date: string,  
 &emsp;}  
 &ensp;],  
-&ensp;schedule: [  
+&ensp;**schedule**: [  
 &emsp;{  
 &emsp;&ensp;day: number,  
 &emsp;&ensp;startHour: number,  
@@ -53,14 +56,14 @@ Course {
 &emsp;&ensp;endMinutes: number,  
 &emsp;}  
 &ensp;],  
-&ensp;assignments: [  
+&ensp;**assignments**: [  
 &emsp;{  
 &emsp;&ensp;title: string,  
 &emsp;&ensp;description: string,  
 &emsp;&ensp;submitDate: string,  
 &emsp;}  
 &ensp;],  
-&ensp;chat: [  
+&ensp;**chat**: [  
 &emsp;{  
 &emsp;&ensp;user: ObjectId,  
 &emsp;&ensp;message: string,  
